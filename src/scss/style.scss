@@ -11,9 +11,25 @@
   justify-content: center;
 }
 
+.m-r-auto {
+  margin-right: auto;
+}
+
+.m-l-auto {
+  margin-left: auto;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
 header {
-  img {
-    height: 30px;
+  nav {
+    gap: 30px;
+
+    img {
+      height: 30px;
+    } 
   }
 }
 
