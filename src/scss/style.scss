@@ -1,3 +1,9 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 .flex-row {
   display: flex;
   flex-direction: row;
@@ -50,10 +56,12 @@ main {
   display: grid;
   grid-template-columns: repeat(auto-fill, 150px);
   grid-gap: 50px 50px;
+  height: calc(100vh - 48px);
+  overflow-y: scroll;
 }
 
 footer {
-  width: 100%;
-  position: fixed;
-  bottom: 0;
+  // width: 100%;
+  // position: fixed;
+  // bottom: 0;
 }
