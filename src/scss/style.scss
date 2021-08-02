@@ -7,8 +7,18 @@
   align-items: center;
 }
 
+.justify-center {
+  justify-content: center;
+}
+
 header {
   img {
     height: 30px;
   }
+}
+
+footer {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
 }
