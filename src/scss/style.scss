@@ -46,6 +46,12 @@ header {
   }
 }
 
+main {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 150px);
+  grid-gap: 50px 50px;
+}
+
 footer {
   width: 100%;
   position: fixed;
