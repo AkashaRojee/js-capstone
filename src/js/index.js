@@ -1,3 +1,11 @@
 import '../scss/style.scss';
-import logo from '../assets/logo.png';
-import html from '../index.html';
+import Home from './Home.js';
+
+function init() {
+
+  let home = new Home();
+  home.init();
+  
+}
+
+window.addEventListener('load', init);
