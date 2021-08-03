@@ -431,15 +431,20 @@
       <div class="fade-after"></div>
     </main>
 
-    <section class="popup flex-col ">
-      <img src="https://terrigen-cdn-dev.marvel.com/content/prod/1x/012scw_ons_crd_02.jpg" alt="popupimg">
+    <section class="popup flex-col">
+      <img
+        src="https://terrigen-cdn-dev.marvel.com/content/prod/1x/012scw_ons_crd_02.jpg"
+        alt="popupimg"
+      />
       <h2>popup title</h2>
-      <span class="material-icons">favorite_border</span>
-      <div class="details"> 
-          <p>super power:magic</p>
-          <p>age:30</p>
+
+      <span class="material-icons flex-col justify-end">favorite_border</span>
+      <span>0 Likes </span>
+      <div class="details">
+        <p>super power:magic</p>
+        <p>age:30</p>
       </div>
-      <div class="comments flex-col justify-between justify-center" >
+      <div class="comments flex-col justify-between justify-center p-y-50">
         <h6 class="justify-start">user name1</h6>
         <p>awesome character</p>
         <h6>user name2</h6>
@@ -447,11 +452,18 @@
         <h6>user name3</h6>
         <p>awesome character</p>
       </div>
-      <form>
-          <h3>add comment</h3>
-          <input type="text" placeholder="yourname" >
-          <textarea name="txtname" rows="4" cols="50" maxlength="200">
-            <button>comment</button>
+      <form class="flex-col">
+        <h3>add comment</h3>
+        <input type="text" placeholder="yourname" />
+        <textarea
+          id="txtid"
+          name="txtname"
+          rows="4"
+          cols="50"
+          maxlength="200"
+          placeholder="text"
+        ></textarea>
+        <button>comment</button>
       </form>
     </section>
     <footer class="flex-row justify-center dark-grey-bg p-y-10">
