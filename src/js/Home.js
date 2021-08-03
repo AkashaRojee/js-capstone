@@ -1,22 +1,36 @@
 import createElement from './library.js';
 import API from './API.js';
+import Character from './Character.js';
 
 export default class Home {
 
   constructor() {
-    this.characters = [];
+    this.characters = {};
     this.itemCards = [];
   }
 
   async init() {
-    await this.callAPI();
+    let apiCharacters = await this.callAPI();
+    this.createCharacterMap(apiCharacters);
     this.populate();
     // this.setEventListeners();
   }
 
-  async callAPI() {
+  callAPI() {
     let api = new API();
-    this.characters = await api.get();
+    return api.get();
+  }
+
+  createCharacterMap(apiCharacters) {
+    apiCharacters.forEach(apiCharacter => {
+      this.characters[apiCharacter.name] =
+        new Character(
+          apiCharacter.id, 
+          apiCharacter.name, 
+          apiCharacter.description, 
+          apiCharacter.thumbnail.path + '.' + apiCharacter.thumbnail.extension,
+          apiCharacter.urls[0].url);
+    });
   }
 
   populate() {
@@ -25,9 +39,9 @@ export default class Home {
   }
 
   createItems() {
-    this.characters.forEach(character => {
-      this.itemCards.push(this.buildItemCard(character.name, character.thumbnail));
-    })
+    Object.values(this.characters).forEach(character => {
+      this.itemCards.push(this.buildItemCard(character.name, character.image));
+    });
   }
 
   appendItems() {
@@ -35,14 +49,14 @@ export default class Home {
     parentContainer.append(...this.itemCards);
   }
 
-  buildItemCard(name, imageData) {
+  buildItemCard(name, image) {
     let itemCard = createElement('div', 'flex-col');
   
     let img = createElement(
       'img',
       '',
       {
-        src: `${imageData.path}.${imageData.extension}`,
+        src: image,
       });
   
     let spanDiv = createElement('div', 'flex-row justify-between');

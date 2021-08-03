@@ -6,7 +6,7 @@ export default class API {
 
     const params = {
       apikey: '86af4a1749d744f4f6c643c5c87a4f3c',
-      limit: '100'
+      limit: '10'
     }
 
     Object.keys(params).forEach(key => url.searchParams.append(key, params[key]));
