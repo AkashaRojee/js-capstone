@@ -79,7 +79,8 @@ main {
 .popup {
   width: 40%;
   border: 1px solid #000;
-  margin: 0 auto;
+  margin: 3em auto;
+  padding: 3em;
   img {
     width: 50%;
     margin: 0 auto;
@@ -92,7 +93,20 @@ main {
   }
   .comments {
     h6 {
-      font-size: 2em;
+      font-size: 1.4em;
+    }
+  }
+  form {
+    input {
+      padding: 0.5em;
+    }
+
+    textarea {
+      padding: 0.4em;
+    }
+
+    bottom {
+      width: 20%;
     }
   }
 }
