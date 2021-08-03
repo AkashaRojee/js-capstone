@@ -1,34 +1,52 @@
 import createElement from './library.js';
+import API from './API.js';
 
 export default class Home {
 
-  init() {
+  constructor() {
+    this.characters = [];
+    this.itemCards = [];
+  }
+
+  async init() {
+    await this.callAPI();
     this.populate();
-    this.setEventListeners();
+    // this.setEventListeners();
+  }
+
+  async callAPI() {
+    let api = new API();
+    this.characters = await api.get();
   }
 
   populate() {
-    let itemCards = [];
-    let parentContainer = document.querySelector('.grid');
-    for (let i = 0; i < 100; i++) {
-      itemCards.push(this.buildItemCard());
-    }
-    parentContainer.append(...itemCards);
+    this.createItems();
+    this.appendItems();
   }
 
-  buildItemCard() {
+  createItems() {
+    this.characters.forEach(character => {
+      this.itemCards.push(this.buildItemCard(character.name, character.thumbnail));
+    })
+  }
+
+  appendItems() {
+    let parentContainer = document.querySelector('.grid');
+    parentContainer.append(...this.itemCards);
+  }
+
+  buildItemCard(name, imageData) {
     let itemCard = createElement('div', 'flex-col');
   
     let img = createElement(
       'img',
       '',
       {
-        src: 'https://terrigen-cdn-dev.marvel.com/content/prod/1x/012scw_ons_crd_02.jpg',
-        width: '150px'
+        src: `${imageData.path}.${imageData.extension}`,
       });
   
     let spanDiv = createElement('div', 'flex-row justify-between');
-    let spanName = createElement('span', '', {}, 'Name');
+    let spanName = createElement('span', '', {}, name);
     let spanIcon = createElement('span', 'material-icons', {}, 'favorite_border');
     spanDiv.append(spanName, spanIcon);
   

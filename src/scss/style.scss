@@ -38,6 +38,10 @@ main {
     grid-gap: 50px 50px;
     height: calc(100vh - 188px);
     overflow-y: scroll;
+
+    img {
+      height: 150px;
+    }
   }
 
   ::-webkit-scrollbar {
