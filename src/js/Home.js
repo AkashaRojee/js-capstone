@@ -3,14 +3,17 @@ import createElement from './library.js';
 export default class Home {
 
   init() {
+    this.populate();
+    this.setEventListeners();
+  }
 
+  populate() {
     let itemCards = [];
     let parentContainer = document.querySelector('.grid');
     for (let i = 0; i < 100; i++) {
       itemCards.push(this.buildItemCard());
     }
     parentContainer.append(...itemCards);
-
   }
 
   buildItemCard() {
