@@ -11,4 +11,12 @@ const createElement = (elementType, classNames = '', attributes = {}, innerHTML 
   return elementObject;
 };
 
-export { createElement };
+const addListeners = (elements, listeners) => {
+  elements.forEach((element) => {
+    Object.entries(listeners).forEach(([event, listener]) => {
+      element.addEventListener(event, listener);
+    });
+  });
+};
+
+export {createElement, addListeners};
