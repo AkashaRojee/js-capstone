@@ -2,34 +2,46 @@ import {createElement, addListeners } from './library.js';
 import MarvelAPI from './MarvelAPI.js';
 import InvolvementAPI from './InvolvementAPI.js';
 import Character from './Character.js';
+import Card from './Card.js';
+import Grid from './Grid.js';
 
 export default class Home {
 
   constructor() {
+    this.base = new MarvelAPI();
+    this.involvement = new InvolvementAPI();
+    this.apiCharacters = [];
+    this.apiLikes = [];
     this.characters = {};
     this.likes = {};
     this.itemCards = [];
-    this.base = new MarvelAPI();
-    this.involvement = new InvolvementAPI();
   }
 
   async init() {
-    const apiCharacters = await this.base.getCharacters();
-    const apiLikes = await this.involvement.getLikes();
-    this.createLikes(apiLikes);
-    this.createCharacters(apiCharacters, apiLikes);
-    this.populate();
+    await this.callAPIs();
+    this.objectifyAPIData();
+    this.populateGrid();
     this.setEventListeners();
   }
 
-  createLikes(apiLikes) {
-    apiLikes.forEach(apiLike => {
+  async callAPIs() {
+    this.apiCharacters = await this.base.getCharacters();
+    this.apiLikes = await this.involvement.getLikes();
+  }
+
+  objectifyAPIData() {
+    this.objectifyLikes();
+    this.objectifyCharacters();
+  }
+
+  objectifyLikes() {
+    this.apiLikes.forEach(apiLike => {
       this.likes[apiLike.item_id] = apiLike.likes;
     })
   }
 
-  createCharacters(apiCharacters, apiLikes) {
-    apiCharacters.forEach(apiCharacter => {
+  objectifyCharacters() {
+    this.apiCharacters.forEach(apiCharacter => {
       this.characters[apiCharacter.name] =
         new Character(
           apiCharacter.id, 
@@ -41,46 +53,9 @@ export default class Home {
     });
   }
 
-  populate() {
-    this.createItems();
-    this.appendItems();
-  }
-
-  createItems() {
-    Object.values(this.characters).forEach(character => {
-      this.itemCards.push(this.buildItemCard(character));
-    });
-  }
-
-  appendItems() {
-    let parentContainer = document.querySelector('.grid');
-    parentContainer.append(...this.itemCards);
-  }
-
-  buildItemCard(character) {
-    let itemCard = createElement('div', 'flex-col');
-  
-    let img = createElement(
-      'img',
-      '',
-      {
-        src: character.image,
-      });
-  
-    let spanDiv = createElement('div', 'flex-row justify-between');
-    let spanName = createElement('span', '', {}, character.name);
-    let spanIcon = createElement('span', 'material-icons like', {}, 'favorite_border');
-    spanDiv.append(spanName, spanIcon);
-  
-    let spanLikes = createElement('span', 'flex-row justify-end', {}, character.likes + ' Likes');
-  
-    let buttonDiv = createElement('div', 'flex-row justify-center');
-    let buttonComments = createElement('button', '', {type:'button'}, 'Comments');
-    buttonDiv.append(buttonComments);
-  
-    itemCard.append(img, spanDiv, spanLikes, buttonDiv)
-  
-    return itemCard;
+  populateGrid() {
+    let grid = new Grid('grid');
+    grid.build(this.characters).append();
   }
 
   setEventListeners() {
