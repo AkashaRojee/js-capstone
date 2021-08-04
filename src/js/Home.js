@@ -1,4 +1,4 @@
-import {addListeners } from './library.js';
+import {addListeners} from './library.js';
 import MarvelAPI from './MarvelAPI.js';
 import InvolvementAPI from './InvolvementAPI.js';
 import Character from './Character.js';
@@ -13,6 +13,7 @@ export default class Home {
     this.apiLikes = [];
     this.characters = {};
     this.likes = {};
+    this.itemId = 0;
   }
 
   async init() {
@@ -61,18 +62,20 @@ export default class Home {
     addListeners(likeButtons, {'click': (e) => this.likeCharacter(e)});
   }
 
-  async likeCharacter(e) {
+  likeCharacter(e) {
+    this.updateLocalLikes(e.target);
+    this.involvement.postLike(this.itemId);
+  }
 
-    const name = e.target.previousElementSibling.innerHTML;
-    const likeElement = e.target.parentElement.nextElementSibling;
-    const itemId = this.characters[name].id;
+  updateLocalLikes(element) {
+    const name = element.previousElementSibling.innerHTML;
+    const likeElement = element.parentElement.nextElementSibling;
+    this.itemId = this.characters[name].id;
 
-    this.likes[itemId]++;
+    this.likes[this.itemId]++;
     this.characters[name].likes++;
-    likeElement.innerHTML = this.likes[itemId] + ' Likes';
 
-    await this.involvement.postLike(itemId);
-
+    likeElement.innerHTML = this.likes[this.itemId] + ' Likes';
   }
 
 }
