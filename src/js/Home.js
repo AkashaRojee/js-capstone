@@ -19,6 +19,7 @@ export default class Home {
   async init() {
     await this.getAPIData();
     this.objectifyAPIData();
+    this.displayCounter();
     this.populateGrid();
     this.setEventListeners();
   }
@@ -50,6 +51,11 @@ export default class Home {
           apiCharacter.thumbnail.path + '.' + apiCharacter.thumbnail.extension,
           apiCharacter.urls[0].url);
     });
+  }
+
+  displayCounter() {
+    let charactersMenu = document.querySelector('nav a');
+    charactersMenu.innerHTML = `Characters (${this.apiCharacters.length})`;
   }
 
   populateGrid() {
