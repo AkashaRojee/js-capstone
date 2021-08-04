@@ -2,6 +2,7 @@ import {createElement, addListeners } from './library.js';
 import MarvelAPI from './MarvelAPI.js';
 import InvolvementAPI from './InvolvementAPI.js';
 import Character from './Character.js';
+import Popup from './Popup.js';
 
 export default class Home {
 
