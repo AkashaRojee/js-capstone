@@ -18,13 +18,13 @@ export default class Home {
   }
 
   async init() {
-    await this.callAPIs();
+    await this.getAPIData();
     this.objectifyAPIData();
     this.populateGrid();
     this.setEventListeners();
   }
 
-  async callAPIs() {
+  async getAPIData() {
     this.apiCharacters = await this.base.getCharacters();
     this.apiLikes = await this.involvement.getLikes();
   }
@@ -72,6 +72,15 @@ export default class Home {
 
     let likeButtons = document.querySelectorAll('.like');
     addListeners(likeButtons, {'click': (e) => this.likeCharacter(e)});
+
+    likeButtons.forEach(likeButton => {
+      likeButton.addEventListener('mouseenter', (e) => this.changeIcon(e));
+      likeButton.addEventListener('mouseleave', (e) => this.changeIcon(e));
+    })
+  }
+
+  changeIcon(e) {
+    e.target.innerHTML = (e.target.innerHTML === 'favorite' ? 'favorite_border' : 'favorite');
   }
 
   likeCharacter(e) {
