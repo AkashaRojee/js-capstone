@@ -16,7 +16,7 @@ export default class API {
     const data = await response.json();
 
     return data;
-    
+
   }
 
   async post() {

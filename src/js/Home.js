@@ -7,40 +7,34 @@ export default class Home {
 
   constructor() {
     this.characters = {};
+    this.likes = {};
     this.itemCards = [];
+    this.base = new MarvelAPI();
+    this.involvement = new InvolvementAPI();
   }
 
   async init() {
-    const apiCharacters = await this.callAPI();
-    this.createCharacters(apiCharacters);
+    const apiCharacters = await this.base.getCharacters();
+    const apiLikes = await this.involvement.getLikes();
+    this.createLikes(apiLikes);
+    this.createCharacters(apiCharacters, apiLikes);
     this.populate();
     this.setEventListeners();
   }
 
-  setEventListeners() {
-    let likeButtons = document.querySelectorAll('.like');
-    likeButtons.forEach(likeButton => {
-      likeButton.addEventListener('click', () => this.likeCharacter(likeButton.previousElementSibling.innerHTML));
+  createLikes(apiLikes) {
+    apiLikes.forEach(apiLike => {
+      this.likes[apiLike.item_id] = apiLike.likes;
     })
   }
 
-  likeCharacter(name) {
-    let itemId = this.characters[name].id;
-    let api = new InvolvementAPI();
-    api.postLike(itemId);
-  }
-
-  callAPI() {
-    let api = new MarvelAPI();
-    return api.getCharacters();
-  }
-
-  createCharacters(apiCharacters) {
+  createCharacters(apiCharacters, apiLikes) {
     apiCharacters.forEach(apiCharacter => {
       this.characters[apiCharacter.name] =
         new Character(
           apiCharacter.id, 
-          apiCharacter.name, 
+          apiCharacter.name,
+          this.likes[apiCharacter.id], 
           apiCharacter.description, 
           apiCharacter.thumbnail.path + '.' + apiCharacter.thumbnail.extension,
           apiCharacter.urls[0].url);
@@ -54,7 +48,7 @@ export default class Home {
 
   createItems() {
     Object.values(this.characters).forEach(character => {
-      this.itemCards.push(this.buildItemCard(character.name, character.image));
+      this.itemCards.push(this.buildItemCard(character));
     });
   }
 
@@ -63,22 +57,22 @@ export default class Home {
     parentContainer.append(...this.itemCards);
   }
 
-  buildItemCard(name, image) {
+  buildItemCard(character) {
     let itemCard = createElement('div', 'flex-col');
   
     let img = createElement(
       'img',
       '',
       {
-        src: image,
+        src: character.image,
       });
   
     let spanDiv = createElement('div', 'flex-row justify-between');
-    let spanName = createElement('span', '', {}, name);
+    let spanName = createElement('span', '', {}, character.name);
     let spanIcon = createElement('span', 'material-icons like', {}, 'favorite_border');
     spanDiv.append(spanName, spanIcon);
   
-    let spanLikes = createElement('span', 'flex-row justify-end', {}, '0 Likes');
+    let spanLikes = createElement('span', 'flex-row justify-end', {}, character.likes + ' Likes');
   
     let buttonDiv = createElement('div', 'flex-row justify-center');
     let buttonComments = createElement('button', '', {type:'button'}, 'Comments');
@@ -87,6 +81,21 @@ export default class Home {
     itemCard.append(img, spanDiv, spanLikes, buttonDiv)
   
     return itemCard;
+  }
+
+  setEventListeners() {
+    let likeButtons = document.querySelectorAll('.like');
+    likeButtons.forEach(likeButton => {
+      likeButton.addEventListener('click', () => this.likeCharacter(likeButton.previousElementSibling.innerHTML, likeButton.parentElement.nextElementSibling));
+    })
+  }
+
+  async likeCharacter(name, likeElement) {
+    let itemId = this.characters[name].id;
+    await this.involvement.postLike(itemId);
+    this.likes[itemId]++;
+    this.characters[name].likes++;
+    likeElement.innerHTML = this.likes[itemId] + ' Likes';
   }
 
 }
