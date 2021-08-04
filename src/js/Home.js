@@ -75,15 +75,31 @@ export default class Home {
     let spanLikes = createElement('span', 'flex-row justify-end', {}, character.likes + ' Likes');
   
     let buttonDiv = createElement('div', 'flex-row justify-center');
-    let buttonComments = createElement('button', '', {type:'button'}, 'Comments');
+    let buttonComments = createElement(
+      'button',
+      'Comment-btn',
+      { type: 'button' },
+      'Comments'
+    );
     buttonDiv.append(buttonComments);
-  
-    itemCard.append(img, spanDiv, spanLikes, buttonDiv)
-  
+
+    itemCard.append(img, spanDiv, spanLikes, buttonDiv);
+
     return itemCard;
   }
 
   setEventListeners() {
+
+    const commentBtn = document.querySelectorAll('.Comment-btn');
+
+    let popup = new Popup();
+    console.log(popup);
+    commentBtn.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        popup.init();
+      });
+    });
+
     let likeButtons = document.querySelectorAll('.like');
     likeButtons.forEach(likeButton => {
       likeButton.addEventListener('click', () => this.likeCharacter(likeButton.previousElementSibling.innerHTML, likeButton.parentElement.nextElementSibling));
