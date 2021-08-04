@@ -77,16 +77,13 @@ export default class Home {
     });
 
     let likeButtons = document.querySelectorAll('.like');
-    addListeners(likeButtons, {'click': (e) => this.likeCharacter(e)});
-
-    likeButtons.forEach(likeButton => {
-      likeButton.addEventListener('mouseenter', (e) => this.changeIcon(e));
-      likeButton.addEventListener('mouseleave', (e) => this.changeIcon(e));
-    })
-  }
-
-  changeIcon(e) {
-    e.target.innerHTML = (e.target.innerHTML === 'favorite' ? 'favorite_border' : 'favorite');
+    addListeners(
+      likeButtons, 
+      {
+        'click': (e) => this.likeCharacter(e),
+        'mouseenter': (e) => this.toggleLikeIcon(e),
+        'mouseleave': (e) => this.toggleLikeIcon(e)
+      });
   }
 
   likeCharacter(e) {
@@ -104,5 +101,4 @@ export default class Home {
 
     likeElement.innerHTML = this.likes[this.itemId] + ' Likes';
   }
-
 }
