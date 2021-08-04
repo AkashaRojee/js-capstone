@@ -1,8 +1,7 @@
-import {createElement, addListeners } from './library.js';
+import {addListeners } from './library.js';
 import MarvelAPI from './MarvelAPI.js';
 import InvolvementAPI from './InvolvementAPI.js';
 import Character from './Character.js';
-import Card from './Card.js';
 import Grid from './Grid.js';
 
 export default class Home {
@@ -14,7 +13,6 @@ export default class Home {
     this.apiLikes = [];
     this.characters = {};
     this.likes = {};
-    this.itemCards = [];
   }
 
   async init() {
@@ -60,17 +58,21 @@ export default class Home {
 
   setEventListeners() {
     let likeButtons = document.querySelectorAll('.like');
-    likeButtons.forEach(likeButton => {
-      likeButton.addEventListener('click', () => this.likeCharacter(likeButton.previousElementSibling.innerHTML, likeButton.parentElement.nextElementSibling));
-    })
+    addListeners(likeButtons, {'click': (e) => this.likeCharacter(e)});
   }
 
-  async likeCharacter(name, likeElement) {
-    let itemId = this.characters[name].id;
-    await this.involvement.postLike(itemId);
+  async likeCharacter(e) {
+
+    const name = e.target.previousElementSibling.innerHTML;
+    const likeElement = e.target.parentElement.nextElementSibling;
+    const itemId = this.characters[name].id;
+
     this.likes[itemId]++;
     this.characters[name].likes++;
     likeElement.innerHTML = this.likes[itemId] + ' Likes';
+
+    await this.involvement.postLike(itemId);
+
   }
 
 }
