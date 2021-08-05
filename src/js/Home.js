@@ -15,12 +15,13 @@ export default class Home {
     this.characters = {};
     this.likes = {};
     this.itemId = 0;
+    this.charactersCount = 0;
   }
 
   async init() {
     await this.getAPIData();
     this.objectifyAPIData();
-    this.displayCounter();
+    this.handleCounter();
     this.populateGrid();
     this.setEventListeners();
   }
@@ -54,9 +55,18 @@ export default class Home {
     });
   }
 
+  handleCounter() {
+    this.setCounter();
+    this.displayCounter();
+  }
+
+  setCounter() {
+    this.charactersCount = this.apiCharacters.length;
+  }
+
   displayCounter() {
     let charactersMenu = document.querySelector('nav a');
-    charactersMenu.innerHTML = `Characters (${this.apiCharacters.length})`;
+    charactersMenu.innerHTML = `Characters (${this.charactersCount})`;
   }
 
   populateGrid() {
