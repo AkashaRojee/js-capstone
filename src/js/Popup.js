@@ -41,7 +41,7 @@ export default class Popup {
     const detailsSection = createElement('section', 'flex-col');
 
     const name = createElement('h2', 'self-center', {}, this.character.name);
-    const description = createElement('p', '', {}, `${this.character.description}` || 'No description available.');
+    const description = createElement('p', '', {}, `${this.character.description}` || 'No description available from API.');
 
     const divUrl = createElement('div');
     const url = createElement('a', 'minimal', { href: this.character.url, target: '_blank' }, 'Read more');

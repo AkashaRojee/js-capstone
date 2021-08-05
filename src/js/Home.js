@@ -43,16 +43,14 @@ export default class Home {
 
   objectifyCharacters() {
     this.apiCharacters.forEach((apiCharacter) => {
-      if (apiCharacter.description !== '') {
-        this.characters[apiCharacter.name] = new Character(
-          apiCharacter.id,
-          apiCharacter.name,
-          this.likes[apiCharacter.id],
-          apiCharacter.description,
-          `${apiCharacter.thumbnail.path}.${apiCharacter.thumbnail.extension}`,
-          apiCharacter.urls[0].url,
-        );
-      }
+      this.characters[apiCharacter.name] = new Character(
+        apiCharacter.id,
+        apiCharacter.name,
+        this.likes[apiCharacter.id],
+        apiCharacter.description,
+        `${apiCharacter.thumbnail.path}.${apiCharacter.thumbnail.extension}`,
+        apiCharacter.urls[0].url,
+      );
     });
   }
 
@@ -76,13 +74,12 @@ export default class Home {
   }
 
   setEventListeners() {
-
     const commentButtons = document.querySelectorAll('.Comment-btn');
     addListeners(
       commentButtons,
       {
         click: (e) => this.openModal(e),
-      }
+      },
     );
 
     const likeButtons = document.querySelectorAll('.like');
@@ -97,7 +94,8 @@ export default class Home {
   }
 
   openModal(e) {
-    const name = e.target.parentElement.previousElementSibling.previousElementSibling.firstChild.innerHTML;
+    const name = e.target.parentElement.previousElementSibling
+      .previousElementSibling.firstChild.innerHTML;
     const popup = new Popup(this.characters[name]);
     popup.init();
   }
