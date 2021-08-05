@@ -43,14 +43,16 @@ export default class Home {
 
   objectifyCharacters() {
     this.apiCharacters.forEach((apiCharacter) => {
-      this.characters[apiCharacter.name] = new Character(
-        apiCharacter.id,
-        apiCharacter.name,
-        this.likes[apiCharacter.id],
-        apiCharacter.description,
-        `${apiCharacter.thumbnail.path}.${apiCharacter.thumbnail.extension}`,
-        apiCharacter.urls[0].url,
-      );
+      if (apiCharacter.description !== '') {
+        this.characters[apiCharacter.name] = new Character(
+          apiCharacter.id,
+          apiCharacter.name,
+          this.likes[apiCharacter.id],
+          apiCharacter.description,
+          `${apiCharacter.thumbnail.path}.${apiCharacter.thumbnail.extension}`,
+          apiCharacter.urls[0].url,
+        );
+      }
     });
   }
 
@@ -74,15 +76,14 @@ export default class Home {
   }
 
   setEventListeners() {
-    const commentBtn = document.querySelectorAll('.Comment-btn');
 
-    commentBtn.forEach((btn, index) => {
-      btn.addEventListener('click', () => {
-        const { name } = this.apiCharacters[index];
-        const popup = new Popup(this.characters[name]);
-        popup.init();
-      });
-    });
+    const commentButtons = document.querySelectorAll('.Comment-btn');
+    addListeners(
+      commentButtons,
+      {
+        click: (e) => this.openModal(e),
+      }
+    );
 
     const likeButtons = document.querySelectorAll('.like');
     addListeners(
@@ -93,6 +94,12 @@ export default class Home {
         mouseleave: (e) => toggle(e.target, 'innerHTML', ['favorite', 'favorite_border']),
       },
     );
+  }
+
+  openModal(e) {
+    const name = e.target.parentElement.previousElementSibling.previousElementSibling.firstChild.innerHTML;
+    const popup = new Popup(this.characters[name]);
+    popup.init();
   }
 
   likeCharacter(e) {
