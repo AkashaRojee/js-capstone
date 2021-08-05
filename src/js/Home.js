@@ -1,12 +1,12 @@
-import {addListeners} from './library.js';
+import { addListeners, toggle } from './library.js';
 import MarvelAPI from './MarvelAPI.js';
 import InvolvementAPI from './InvolvementAPI.js';
 import Character from './Character.js';
+import Grid from './Grid.js';
 import Popup from './Popup.js';
 import Grid from './Grid.js';
 
 export default class Home {
-
   constructor() {
     this.base = new MarvelAPI();
     this.involvement = new InvolvementAPI();
@@ -37,21 +37,21 @@ export default class Home {
   }
 
   objectifyLikes() {
-    this.apiLikes.forEach(apiLike => {
+    this.apiLikes.forEach((apiLike) => {
       this.likes[apiLike.item_id] = apiLike.likes;
-    })
+    });
   }
 
   objectifyCharacters() {
-    this.apiCharacters.forEach(apiCharacter => {
-      this.characters[apiCharacter.name] =
-        new Character(
-          apiCharacter.id, 
-          apiCharacter.name,
-          this.likes[apiCharacter.id], 
-          apiCharacter.description, 
-          apiCharacter.thumbnail.path + '.' + apiCharacter.thumbnail.extension,
-          apiCharacter.urls[0].url);
+    this.apiCharacters.forEach((apiCharacter) => {
+      this.characters[apiCharacter.name] = new Character(
+        apiCharacter.id,
+        apiCharacter.name,
+        this.likes[apiCharacter.id],
+        apiCharacter.description,
+        `${apiCharacter.thumbnail.path}.${apiCharacter.thumbnail.extension}`,
+        apiCharacter.urls[0].url,
+      );
     });
   }
 
@@ -65,12 +65,12 @@ export default class Home {
   }
 
   displayCounter() {
-    let charactersMenu = document.querySelector('nav a');
+    const charactersMenu = document.querySelector('nav a');
     charactersMenu.innerHTML = `Characters (${this.charactersCount})`;
   }
 
   populateGrid() {
-    let grid = new Grid('grid');
+    const grid = new Grid('grid');
     grid.build(this.characters).append();
   }
 
@@ -86,14 +86,15 @@ export default class Home {
       });
     });
 
-    let likeButtons = document.querySelectorAll('.like');
+    const likeButtons = document.querySelectorAll('.like');
     addListeners(
-      likeButtons, 
+      likeButtons,
       {
-        'click': (e) => this.likeCharacter(e),
-        'mouseenter': (e) => this.toggleLikeIcon(e),
-        'mouseleave': (e) => this.toggleLikeIcon(e)
-      });
+        click: (e) => this.likeCharacter(e),
+        mouseenter: (e) => toggle(e.target, 'innerHTML', ['favorite', 'favorite_border']),
+        mouseleave: (e) => toggle(e.target, 'innerHTML', ['favorite', 'favorite_border']),
+      },
+    );
   }
 
   likeCharacter(e) {
@@ -109,6 +110,6 @@ export default class Home {
     this.likes[this.itemId] += 1;
     this.characters[name].likes += 1;
 
-    likeElement.innerHTML = this.likes[this.itemId] + ' Likes';
+    likeElement.innerHTML = `${this.likes[this.itemId]} Likes`;
   }
 }

@@ -11,9 +11,9 @@ export default class Grid {
   set className(className) {
     this.container = document.querySelector(`.${className}`);
   }
-  
+
   build(characters) {
-    Object.values(characters).forEach(character => {
+    Object.values(characters).forEach((character) => {
       this.cards.push(new Card(character));
     });
     return this;
