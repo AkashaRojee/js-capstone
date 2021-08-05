@@ -15,20 +15,28 @@
   background-color: rgb(32, 32, 32);
 }
 
+a {
+  color: white;
+
+  &:hover {
+    color: red;
+  }
+}
+
+button {
+  border: 1px solid white;
+
+  &:hover {
+    background-color: red;
+  }
+}
+
 header {
   position: sticky;
   top: 0;
 
   nav {
     gap: 30px;
-
-    a {
-      color: white;
-
-      &:hover {
-        color: red;
-      }
-    }
 
     img {
       height: 30px;
@@ -58,14 +66,6 @@ main {
 
         .material-icons {
           color: red;
-        }
-      }
-
-      button {
-        border: 1px solid white;
-
-        &:hover {
-          background-color: red;
         }
       }
 
@@ -118,41 +118,50 @@ main {
 
 .popup {
   position: absolute;
-  transform: translateX(-50%);
-  top: 3%;
+  top: 50%;
   left: 50%;
-  width: 40%;
-  height: 95%;
-  border: 1px solid #000;
-  padding: 2em;
-  background-color: #fff;
-  .closing-btn {
-    display: flex;
-    font-size: 3em;
-    cursor: pointer;
-  }
-  img {
-    width: 50%;
-    margin: 0 auto;
-  }
-  h2 {
-    margin: 0 auto;
-  }
-  .details {
-    font-size: 2em;
-  }
-  .comments {
-    h6 {
-      font-size: 1.4em;
-    }
-  }
-  form {
-    input {
-      padding: 0.5em;
-    }
+  transform: translate(-50%, -50%);
+  background-color: #151515;
 
+  & > div {
+    gap: 20px;
+
+    section {
+      gap: 10px;
+    }
+  }
+
+  h2, h3 {
+    color: red;
+  }
+
+  img {
+    width: 80vh;
+    height: 80vh;
+  }
+
+  p, span {
+    font-weight: 400;
+  }
+
+  .material-icons {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+
+  form {
+    gap: 10px;
+
+    input, textarea {
+      outline: none;
+      color: black;
+      font-weight: 400;
+      font-size: 16px;
+    }
+  
     textarea {
-      padding: 0.3em;
+      resize: none;
     }
   }
 }
