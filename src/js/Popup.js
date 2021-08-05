@@ -112,9 +112,11 @@ export default class Popup {
 
   handleComment() {
     this.getCommentFields();
-    this.postComment();
-    this.updateLocalComments();
-    this.resetCommentFields();
+    if (Array.from(this.commentFields).every((commentField) => commentField.value !== '')) {
+      this.postComment();
+      this.updateLocalComments();
+      this.resetCommentFields();
+    }
   }
 
   getCommentFields() {
