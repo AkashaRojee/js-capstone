@@ -1,7 +1,6 @@
 import Card from './Card.js';
 
 export default class Grid {
-
   constructor(className) {
     this.container = '';
     this.className = className;

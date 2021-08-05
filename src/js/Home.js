@@ -75,11 +75,11 @@ export default class Home {
 
   setEventListeners() {
     const commentBtn = document.querySelectorAll('.Comment-btn');
-  
+
     commentBtn.forEach((btn, index) => {
       btn.addEventListener('click', () => {
-        let name = this.apiCharacters[index].name;
-        let popup = new Popup(this.characters[name]);
+        const { name } = this.apiCharacters[index];
+        const popup = new Popup(this.characters[name]);
         popup.init();
       });
     });
