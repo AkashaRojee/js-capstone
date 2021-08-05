@@ -73,15 +73,15 @@ export default class Home {
     grid.build(this.characters).append();
   }
 
-  setEventListeners() {
-
+  async setEventListeners() {
     const commentBtn = document.querySelectorAll('.Comment-btn');
-
+    const apiCharacters = await this.base.getCharacters();
     let popup = new Popup();
-    console.log(popup);
-    commentBtn.forEach((btn) => {
+    commentBtn.forEach((btn, index) => {
       btn.addEventListener('click', () => {
-        popup.init();
+        let name = apiCharacters[index].name;
+        let image = this.characters[name].image;
+        popup.init(image, name, apiCharacters[index].description);
       });
     });
 
