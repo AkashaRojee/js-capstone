@@ -1,21 +1,29 @@
+import InvolvementAPI from './InvolvementAPI.js';
 import { createElement } from './library.js';
 
 export default class Popup {
+
   constructor(character) {
     this.character = character;
+    this.involvement = new InvolvementAPI();
+    this.apiComments = [];
+    this.commentsCount = 0;
+    this.commentFields = [];
   }
 
-  init() {
+  async init() {
+    await this.getComments();
+    this.setCounter();
     this.build();
-    this.setEventListener();
+    this.setEventListeners();
   }
 
-  async setEventListener() {
-    let closeButton = document.querySelector('.close');
-    let popupSection = document.querySelector('.popup');
-    closeButton.addEventListener('click', () => {
-      document.body.removeChild(popupSection);
-    });
+  async getComments() {
+    this.apiComments = await this.involvement.getComments(this.character.id);
+  }
+
+  setCounter() {
+    this.commentsCount = this.apiComments.length;
   }
 
   build() {
@@ -35,7 +43,7 @@ export default class Popup {
     let detailsSection = createElement('section', 'flex-col');
 
     let name = createElement('h2', 'self-center', {}, this.character.name);
-    let description = createElement('p', '', {}, `${this.character.description}` || `No description available from API`);
+    let description = createElement('p', '', {}, `${this.character.description}` || `No description available.`);
     
     let divUrl = createElement('div');
     let url = createElement('a', 'minimal', {href: this.character.url, target: '_blank'}, 'Read more');
@@ -47,17 +55,18 @@ export default class Popup {
 
     let commentsSection = createElement('section', 'flex-col');
       
-    let commentsHeader = createElement('h3', 'self-center', {}, 'Comments (n)');
+    let commentsHeader = createElement('h3', 'comments-header self-center', {}, `Comments (${this.commentsCount})`);
 
-    let commentsContainer = createElement('div');
-    for (let i = 0; i < 3; i++) {
-      let commentRow = createElement('div', 'flex-row');
-      let date = createElement('span', '', {}, '05/11/2021');
-      let user = createElement('span', '', {}, 'Name:');
-      let comment = createElement('span', '', {}, 'Comment ' + i);
+    let commentsContainer = createElement('div', 'comments-container flex-col scroll-y');
+
+    this.apiComments.forEach((apiComment) => {
+      let commentRow = createElement('div', 'comment-row flex-row');
+      let date = createElement('span', '', {}, apiComment.creation_date);
+      let user = createElement('span', '', {}, apiComment.username);
+      let comment = createElement('span', '', {}, apiComment.comment);
       commentRow.append(date, user, comment);
       commentsContainer.append(commentRow);
-    }
+    });
 
     commentsSection.append(commentsHeader, commentsContainer);
 
@@ -67,13 +76,14 @@ export default class Popup {
 
     let formHeader = createElement('h3', 'self-center', {}, 'Add a comment');
 
-    let form = createElement('form', 'flex-col');
-    let input = createElement('input', 'p-y-5 p-x-10', {type: 'text', placeholder: 'Your name'});
-    let textarea = createElement('textarea', 'p-y-5 p-x-10', {
+    // let form = createElement('form', 'flex-col');
+    let input = createElement('input', 'comment-field p-y-5 p-x-10', {type: 'text', placeholder: 'Your name', maxlength: '10'});
+    let textarea = createElement('textarea', 'comment-field p-y-5 p-x-10', {
       id: 'txtid',
       name: 'txtname',
-      rows: '2',
+      rows: '1',
       cols: '50',
+      maxlength: '50',
       placeholder: 'Your insights',
     });
 
@@ -81,8 +91,8 @@ export default class Popup {
     let button = createElement('button', 'minimal pointer p-y-5 p-x-10', {}, 'Comment');
     divButton.append(button);
 
-    form.append(input, textarea, divButton);
-    formSection.append(formHeader, form);
+    // form.append(input, textarea, divButton);
+    formSection.append(formHeader, input, textarea, divButton);
 
     //PARENTS
 
@@ -91,5 +101,57 @@ export default class Popup {
     modal.append(closeIcon, imageContainer, nonImageContainer);
 
     document.body.append(modal);
+  }
+
+  setEventListeners() {
+
+    let closeButton = document.querySelector('.close');
+    let modal = document.querySelector('.popup');
+    closeButton.addEventListener('click', () => document.body.removeChild(modal));
+
+    let commentButton = document.querySelector('.popup button');
+    commentButton.addEventListener('click', () => this.handleComment());
+
+  }
+
+  handleComment() {
+    this.getCommentFields();
+    this.postComment();
+    this.updateLocalComments();
+    this.resetCommentFields();
+  }
+
+  getCommentFields() {
+    this.commentFields = document.querySelectorAll('.comment-field');
+  }
+
+  postComment() {
+    this.involvement.postComment(
+      this.character.id,
+      this.commentFields[0].value,
+      this.commentFields[1].value
+    );
+  }
+
+  resetCommentFields() {
+    Array.from(this.commentFields).forEach((commentField) => { commentField.value = ''; });
+    this.commentFields[0].focus();
+  }
+
+  updateLocalComments() {
+    this.commentsCount += 1;
+
+    let commentsContainer = document.querySelector('.comments-container')
+
+    let commentsHeader = document.querySelector('.comments-header');
+    commentsHeader.innerHTML = `Comments (${this.commentsCount})`;
+
+    let commentRow = createElement('div', 'comment-row flex-row');
+    let date = createElement('span', '', {}, new Date().toISOString().slice(0,10));
+    let user = createElement('span', '', {}, this.commentFields[0].value);
+    let comment = createElement('span', '', {}, this.commentFields[1].value);
+    commentRow.append(date, user, comment);
+
+    commentsContainer.prepend(commentRow);
   }
 }
