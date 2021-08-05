@@ -2,7 +2,7 @@ import '../scss/style.scss';
 import Home from './Home.js';
 
 function init() {
-  const home = new Home();
+  let home = new Home();
   home.init();
 }
 

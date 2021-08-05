@@ -3,6 +3,7 @@ import MarvelAPI from './MarvelAPI.js';
 import InvolvementAPI from './InvolvementAPI.js';
 import Character from './Character.js';
 import Grid from './Grid.js';
+import Popup from './Popup.js';
 
 export default class Home {
   constructor() {
@@ -73,6 +74,17 @@ export default class Home {
   }
 
   setEventListeners() {
+
+    const commentBtn = document.querySelectorAll('.Comment-btn');
+
+    let popup = new Popup();
+    console.log(popup);
+    commentBtn.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        popup.init();
+      });
+    });
+
     const likeButtons = document.querySelectorAll('.like');
     addListeners(
       likeButtons,
