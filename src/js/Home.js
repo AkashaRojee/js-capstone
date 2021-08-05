@@ -1,11 +1,10 @@
-import {createElement, addListeners } from './library.js';
+import { createElement, addListeners } from './library.js';
 import MarvelAPI from './MarvelAPI.js';
 import InvolvementAPI from './InvolvementAPI.js';
 import Character from './Character.js';
 import Popup from './Popup.js';
 
 export default class Home {
-
   constructor() {
     this.characters = {};
     this.likes = {};
@@ -24,21 +23,21 @@ export default class Home {
   }
 
   createLikes(apiLikes) {
-    apiLikes.forEach(apiLike => {
+    apiLikes.forEach((apiLike) => {
       this.likes[apiLike.item_id] = apiLike.likes;
-    })
+    });
   }
 
   createCharacters(apiCharacters, apiLikes) {
-    apiCharacters.forEach(apiCharacter => {
-      this.characters[apiCharacter.name] =
-        new Character(
-          apiCharacter.id, 
-          apiCharacter.name,
-          this.likes[apiCharacter.id], 
-          apiCharacter.description, 
-          apiCharacter.thumbnail.path + '.' + apiCharacter.thumbnail.extension,
-          apiCharacter.urls[0].url);
+    apiCharacters.forEach((apiCharacter) => {
+      this.characters[apiCharacter.name] = new Character(
+        apiCharacter.id,
+        apiCharacter.name,
+        this.likes[apiCharacter.id],
+        apiCharacter.description,
+        apiCharacter.thumbnail.path + '.' + apiCharacter.thumbnail.extension,
+        apiCharacter.urls[0].url
+      );
     });
   }
 
@@ -48,7 +47,7 @@ export default class Home {
   }
 
   createItems() {
-    Object.values(this.characters).forEach(character => {
+    Object.values(this.characters).forEach((character) => {
       this.itemCards.push(this.buildItemCard(character));
     });
   }
@@ -60,21 +59,28 @@ export default class Home {
 
   buildItemCard(character) {
     let itemCard = createElement('div', 'flex-col');
-  
-    let img = createElement(
-      'img',
-      '',
-      {
-        src: character.image,
-      });
-  
+
+    let img = createElement('img', '', {
+      src: character.image,
+    });
+
     let spanDiv = createElement('div', 'flex-row justify-between');
     let spanName = createElement('span', '', {}, character.name);
-    let spanIcon = createElement('span', 'material-icons like', {}, 'favorite_border');
+    let spanIcon = createElement(
+      'span',
+      'material-icons like',
+      {},
+      'favorite_border'
+    );
     spanDiv.append(spanName, spanIcon);
-  
-    let spanLikes = createElement('span', 'flex-row justify-end', {}, character.likes + ' Likes');
-  
+
+    let spanLikes = createElement(
+      'span',
+      'flex-row justify-end',
+      {},
+      character.likes + ' Likes'
+    );
+
     let buttonDiv = createElement('div', 'flex-row justify-center');
     let buttonComments = createElement(
       'button',
@@ -89,22 +95,26 @@ export default class Home {
     return itemCard;
   }
 
-  setEventListeners() {
-
+  async setEventListeners() {
     const commentBtn = document.querySelectorAll('.Comment-btn');
-
+    const apiCharacters = await this.base.getCharacters();
     let popup = new Popup();
-    console.log(popup);
-    commentBtn.forEach((btn) => {
+    commentBtn.forEach((btn, index) => {
       btn.addEventListener('click', () => {
-        popup.init();
+        let name = apiCharacters[index].name;
+        let image = this.characters[name].image;
+        popup.init(image, name, apiCharacters[index].description);
       });
     });
-
     let likeButtons = document.querySelectorAll('.like');
-    likeButtons.forEach(likeButton => {
-      likeButton.addEventListener('click', () => this.likeCharacter(likeButton.previousElementSibling.innerHTML, likeButton.parentElement.nextElementSibling));
-    })
+    likeButtons.forEach((likeButton) => {
+      likeButton.addEventListener('click', () =>
+        this.likeCharacter(
+          likeButton.previousElementSibling.innerHTML,
+          likeButton.parentElement.nextElementSibling
+        )
+      );
+    });
   }
 
   async likeCharacter(name, likeElement) {
@@ -114,5 +124,4 @@ export default class Home {
     this.characters[name].likes++;
     likeElement.innerHTML = this.likes[itemId] + ' Likes';
   }
-
 }
