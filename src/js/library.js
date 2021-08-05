@@ -19,4 +19,8 @@ const addListeners = (elements, listeners) => {
   });
 };
 
-export {createElement, addListeners};
+const toggle = (target, property, states) => {
+  target[property] = (target[property] === states[0] ? states[1] : states[0]);
+};
+
+export { createElement, addListeners, toggle };
