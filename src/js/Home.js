@@ -94,8 +94,8 @@ export default class Home {
     const likeElement = element.parentElement.nextElementSibling;
     this.itemId = this.characters[name].id;
 
-    this.likes[this.itemId] += this.likes[this.itemId];
-    this.characters[name].likes += this.characters[name].likes;
+    this.likes[this.itemId] += 1;
+    this.characters[name].likes += 1;
 
     likeElement.innerHTML = `${this.likes[this.itemId]} Likes`;
   }
