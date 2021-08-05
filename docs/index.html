@@ -1,28 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Webpack Boilerplate</title>
-<script defer src="main.js"></script></head>
-<body>
 
-  <header>
-    <img src="b5cf139220a01f56173f.png">
-    <!-- <nav>
-      <a href="">Item1</a>
-      <a href="">Item2</a>
-      <a href="">Item3</a>
-    </nav> -->
-  </header>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Marvel Characters</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script defer src="main.js"></script></head>
 
-  <main>
+  <body>
 
-  </main>
+    <header class="dark-grey-bg p-y-10 p-x-100">
+      <nav class="flex-row justify-center align-center">
+        <img class="m-r-auto" src="b5cf139220a01f56173f.png" />
+        <a href="" class="minimal">Characters</a>
+        <a href="" class="minimal">Comics</a>
+        <a href="" class="minimal">Events</a>
+        <img class="m-l-auto hidden" src="b5cf139220a01f56173f.png" />
+      </nav>
+    </header>
 
-  <footer>
+    <main class="p-y-50">
 
-  </footer>
+      <div class="fade fade-before"></div>
 
-</body>
+      <div class="grid justify-center p-x-100 scroll-y">
+        <!-- Populated dynamically -->
+      </div>
+
+      <div class="fade fade-after"></div>
+    </main>
+
+    <footer class="flex-row justify-center dark-grey-bg p-y-10">
+      <p>Created by Akasha and Yahya</p>
+    </footer>
+
+  </body>
+
 </html>
