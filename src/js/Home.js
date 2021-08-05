@@ -4,7 +4,6 @@ import InvolvementAPI from './InvolvementAPI.js';
 import Character from './Character.js';
 import Grid from './Grid.js';
 import Popup from './Popup.js';
-import Grid from './Grid.js';
 
 export default class Home {
   constructor() {
