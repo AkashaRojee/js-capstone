@@ -24,6 +24,18 @@
   justify-content: space-between;
 }
 
+.justify-evenly {
+  justify-content: space-evenly;
+}
+
 .justify-end {
   justify-content: flex-end;
+}
+
+.justify-start {
+  justify-content: flex-start;
+}
+
+.self-center {
+  align-self: center;
 }

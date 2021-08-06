@@ -3,6 +3,7 @@ import MarvelAPI from './MarvelAPI.js';
 import InvolvementAPI from './InvolvementAPI.js';
 import Character from './Character.js';
 import Grid from './Grid.js';
+import Popup from './Popup.js';
 
 export default class Home {
   constructor() {
@@ -73,6 +74,14 @@ export default class Home {
   }
 
   setEventListeners() {
+    const commentButtons = document.querySelectorAll('.Comment-btn');
+    addListeners(
+      commentButtons,
+      {
+        click: (e) => this.openModal(e),
+      },
+    );
+
     const likeButtons = document.querySelectorAll('.like');
     addListeners(
       likeButtons,
@@ -82,6 +91,13 @@ export default class Home {
         mouseleave: (e) => toggle(e.target, 'innerHTML', ['favorite', 'favorite_border']),
       },
     );
+  }
+
+  openModal(e) {
+    const name = e.target.parentElement.previousElementSibling
+      .previousElementSibling.firstChild.innerHTML;
+    const popup = new Popup(this.characters[name]);
+    popup.init();
   }
 
   likeCharacter(e) {
@@ -94,8 +110,8 @@ export default class Home {
     const likeElement = element.parentElement.nextElementSibling;
     this.itemId = this.characters[name].id;
 
-    this.likes[this.itemId] += 1;
-    this.characters[name].likes += 1;
+    this.likes[this.itemId] = this.likes[this.itemId] + 1 || 1;
+    this.characters[name].likes = this.likes[this.itemId];
 
     likeElement.innerHTML = `${this.likes[this.itemId]} Likes`;
   }

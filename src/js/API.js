@@ -1,7 +1,7 @@
 export default class API {
   constructor() {
     this.url = '';
-    this.params = {};
+    this.params = '';
     this.headers = { 'Content-type': 'application/json' };
     this.body = '';
   }

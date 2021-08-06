@@ -8,7 +8,7 @@
 }
 
 .scroll-y {
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .pointer {
@@ -23,6 +23,18 @@
 
 .m-l-auto {
   margin-left: auto;
+}
+
+.m-b-10 {
+  margin-bottom: 10px;
+}
+
+.m-t-10 {
+  margin-top: 10px;
+}
+
+.m-r-10 {
+  margin-right: 10px;
 }
 
 .m-t-25 {

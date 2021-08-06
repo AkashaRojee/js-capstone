@@ -22,7 +22,7 @@ export default class Card {
     const spanLikes = createElement('span', 'flex-row justify-end', {}, `${character.likes} Likes`);
 
     const buttonDiv = createElement('div', 'flex-row justify-center');
-    const buttonComments = createElement('button', 'minimal pointer p-y-5 p-x-10 m-t-25', { type: 'button' }, 'Comments');
+    const buttonComments = createElement('button', 'Comment-btn minimal pointer p-y-5 p-x-10 m-t-25', { type: 'button' }, 'Comments');
     buttonDiv.append(buttonComments);
 
     cardBody.append(cardHeader, spanLikes, buttonDiv);
