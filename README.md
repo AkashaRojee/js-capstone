@@ -1,40 +1,27 @@
+![](https://img.shields.io/badge/Microverse-blueviolet)
+
 # Marvel Characters
 
-**a Marvel superheroes website that displays Characters from the Marvel API**
+**A Marvel superheroes website that displays Characters from the Marvel API**
 
-## screenshot
+## Screenshot
 
-### desktop screenshot
+### Desktop screenshot
 
 ![desktop](./src/assets/website-screenshot.png)
 
-### popup screenshot
+### Popup screenshot
 
 ![popup](./src/assets/popup-screenshot.png)
 
-## authors
-
-**Akasha Rojee**
-
-- GitHub: [@AkashaRojee](https://github.com/AkashaRojee)
-- Twitter: [@AkashaRojee](https://twitter.com/AkashaRojee)
-- LinkedIn: [AkashayahyaRojee](https://linkedin.com/in/AkashaRojee)
-
-**Yahya EL Ganayni**
-
-- GitHub: [@yahyaELganayni](https://github.com/yahyaelganyni1)
-- Twitter: [@yahyaELganayni](https://twitter.com/@crazy20046)
-- LinkedIn: [yahyaELganayni](https://www.linkedin.com/in/yahya-el-ganayni-a456115b/)
-
 ## Built With
 
-- JavaScript
-- Webpack
-- HTML & SCSC
+- Major languages: HTML, SCSS, JS
+- Technologies used: Webpack
 
 ## Live Demo
 
-- [Marvel Characters](https://www.akasharojee.codes/js-capstone/)
+- [View Demo](https://www.akasharojee.codes/marvel-api/)
 
 ## Getting Started
 
@@ -52,7 +39,7 @@ _For more information, <a href="https://www.akasharojee.codes/2021/06/20/intro-t
 Clone the project:
 
 ```
-git clone https://github.com/AkashaRojee/leaderboard.git
+git clone https://github.com/AkashaRojee/marvel-api.git
 ```
 
 ### Install
@@ -86,3 +73,27 @@ To serve the website directly:
 ```
 npm run start
 ```
+
+## Authors
+
+**Akasha Rojee**
+
+- GitHub: [@AkashaRojee](https://github.com/AkashaRojee)
+- Twitter: [@AkashaRojee](https://twitter.com/AkashaRojee)
+- LinkedIn: [AkashayahyaRojee](https://linkedin.com/in/AkashaRojee)
+
+**Yahya EL Ganayni**
+
+- GitHub: [@yahyaELganayni](https://github.com/yahyaelganyni1)
+- Twitter: [@yahyaELganayni](https://twitter.com/@crazy20046)
+- LinkedIn: [yahyaELganayni](https://www.linkedin.com/in/yahya-el-ganayni-a456115b/)
+
+## 🤝 Contributing
+
+Contributions, issues, and feature requests are welcome!
+
+Feel free to check the [issues page](../../issues/).
+
+## Show your support
+
+Give a ⭐️ if you like this project!
