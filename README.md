@@ -80,7 +80,7 @@ npm run start
 
 - GitHub: [@AkashaRojee](https://github.com/AkashaRojee)
 - Twitter: [@AkashaRojee](https://twitter.com/AkashaRojee)
-- LinkedIn: [AkashayahyaRojee](https://linkedin.com/in/AkashaRojee)
+- LinkedIn: [Akasha Rojee](https://linkedin.com/in/AkashaRojee)
 
 **Yahya EL Ganayni**
 
