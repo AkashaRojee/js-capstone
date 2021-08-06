@@ -10,7 +10,7 @@ export default class InvolvementAPI extends API {
     this.url = new URL(`${this.base}/likes`);
 
     const data = await super.get();
-
+    
     return data;
   }
 
